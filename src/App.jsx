@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { RouterProvider } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+// project import
+import router from 'routes';
+import ThemeCustomization from 'themes';
 
+import Locales from 'components/Locales';
+import ScrollTop from 'components/ScrollTop';
+import Snackbar from 'components/@extended/Snackbar';
+import Notistack from 'components/third-party/Notistack';
+
+// auth-provider
+import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
+import { CLientProvider } from './contexts/ClientContext';
+import { OrdersProvider } from './contexts/OrdersContext';
+import { ContractProvider } from './contexts/ContractContext';
+import { StoreProvider } from './contexts/StoreContext';
+// import Customization from './components/Customization';
+import './index.css';
+
+// ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
+
+
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeCustomization>
+      <Locales>
+        <ScrollTop>
+          <AuthProvider>
+            <CLientProvider>
+              <OrdersProvider>
+                <ContractProvider>
+                  <StoreProvider>
+                    <Notistack>
+                      <RouterProvider router={router} />
+                      {/*<Customization />*/}
+                      <Snackbar />
+                    </Notistack>
+                  </StoreProvider>
+                </ContractProvider>
+              </OrdersProvider>
+            </CLientProvider>
+          </AuthProvider>
+        </ScrollTop>
+      </Locales>
+    </ThemeCustomization>
+  );
 }
-
-export default App
